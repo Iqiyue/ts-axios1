@@ -1,7 +1,6 @@
+import { isDate, isPlainObject } from './util'
 
-import {isDate,isObject} from './util'
-
-const encode = function(val:string):string {
+const encode = function(val: string): string {
   return encodeURIComponent(val)
     .replace(/%40/g, '@')
     .replace(/%3A/gi, ':')
@@ -10,44 +9,43 @@ const encode = function(val:string):string {
     .replace(/%20/g, '+')
     .replace(/%5B/gi, '[')
     .replace(/%5D/gi, ']')
-
 }
 
-export function buildURL(url:string,params?:any):string {
-  if(!params){
+export function buildURL(url: string, params?: any): string {
+  if (!params) {
     return url
   }
-  const parts:string[] = [];
-  Object.keys(params).forEach(key=>{
-    let val = params[key];
+  const parts: string[] = []
+  Object.keys(params).forEach(key => {
+    let val = params[key]
     // todo 是undefined 或者null 排除掉
-    if (val === null ||val === undefined){
+    if (val === null || val === undefined) {
       return
     }
-    let  values:string[];
-    if(Array.isArray(val)){
-      values = val;
-      key+="[]"
-    }else {
+    let values: string[]
+    if (Array.isArray(val)) {
+      values = val
+      key += '[]'
+    } else {
       values = [val]
     }
-    values.forEach((val)=> {
+    values.forEach(val => {
       // todo 判断val类型,处理后添加到数组
       if (isDate(val)) {
         val = val.toISOString()
-      }else if(isObject(val)){
+      } else if (isPlainObject(val)) {
         val = JSON.stringify(val)
       }
       parts.push(`${encode(key)} = ${encode(val)}`)
     })
   })
   let serializedParams = parts.join('&')
-  if(serializedParams){
-    const markIndex = url.indexOf('#');
-    if(markIndex !== -1){
-      url.slice(0,markIndex)
+  if (serializedParams) {
+    const markIndex = url.indexOf('#')
+    if (markIndex !== -1) {
+      url.slice(0, markIndex)
     }
-    url += (url.indexOf('?') === -1 ? '?' : '&') +serializedParams
+    url += (url.indexOf('?') === -1 ? '?' : '&') + serializedParams
   }
-  return  url
+  return url
 }
