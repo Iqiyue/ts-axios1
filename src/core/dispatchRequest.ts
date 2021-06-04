@@ -7,6 +7,7 @@ import { transformRequest, transformResponse } from '../helpers/data'
 export default function dispatchRequest(config: AxiosRequestConfig): AxiosPromise {
   processConfig(config)
   return xhr(config).then(res => {
+    debugger
     return transformResponseData(res)
   })
 }
