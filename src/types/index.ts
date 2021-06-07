@@ -16,13 +16,14 @@ export type Method =
   | 'patch'
   | 'PATCH'
 export interface AxiosRequestConfig {
-  url: string
+  url?: string
   method?: Method
   data?: any
   params?: any
   headers?: any
   responseType?: XMLHttpRequestResponseType
   timeout?: number
+  [propName: string]: any
 }
 export interface AxiosResponse<T = any> {
   data: T
@@ -46,6 +47,7 @@ export interface AxiosError extends Error {
 
 // todo  首先定义一个Axios 类型接口,他描述了Axios类中的公共方法,接着定义了AxiosInstance接口,继承了Axios,他就是一个混合类型的接口
 export interface Axios {
+  defaults: AxiosRequestConfig
   interceptors: {
     request: InterceptorManager<AxiosRequestConfig>
     response: InterceptorManager<AxiosResponse>

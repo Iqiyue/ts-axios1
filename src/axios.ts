@@ -1,6 +1,7 @@
-import { AxiosInstance } from './types'
+import { AxiosInstance, AxiosRequestConfig } from './types'
 import Axios from './core/Axios'
 import { extend } from './helpers/util'
+import defaults from './defatults'
 
 // function axios(config: AxiosRequestConfig): AxiosPromise {
 //   processConfig(config)
@@ -37,11 +38,11 @@ import { extend } from './helpers/util'
  * 由于这里 TypeScript 不能正确推断 instance 的类型，我们把它断言成 AxiosInstance 类型
  */
 
-function createInstance(): AxiosInstance {
-  const context = new Axios()
+function createInstance(config: AxiosRequestConfig): AxiosInstance {
+  const context = new Axios(config)
   const instance = Axios.prototype.request.bind(context)
   extend(instance, context)
   return instance as AxiosInstance
 }
-const axios = createInstance()
+const axios = createInstance(defaults)
 export default axios

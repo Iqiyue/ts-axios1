@@ -9,6 +9,7 @@ export function transformRequest(data: any): any {
 }
 
 export function transformResponse(data: any): any {
+  debugger
   if (typeof data === 'string') {
     try {
       data = JSON.parse(data)
