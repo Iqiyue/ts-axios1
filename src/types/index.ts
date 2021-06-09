@@ -15,7 +15,12 @@ export type Method =
   | 'PUT'
   | 'patch'
   | 'PATCH'
+export interface AxiosTransformer {
+  (data: any, headers?: any): any
+}
 export interface AxiosRequestConfig {
+  transformRequest?: AxiosTransformer | AxiosTransformer[]
+  transformResponse?: AxiosTransformer | AxiosTransformer[]
   url?: string
   method?: Method
   data?: any
@@ -64,6 +69,9 @@ export interface Axios {
 export interface AxiosInstance extends Axios {
   <T = any>(config: AxiosRequestConfig): AxiosPromise<T>
   <T = any>(url: string, config?: AxiosRequestConfig): AxiosPromise<T>
+}
+export interface AxiosStatic extends AxiosInstance {
+  create(config?: AxiosRequestConfig): AxiosInstance
 }
 
 // todo 定义拦截器
