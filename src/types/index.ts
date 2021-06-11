@@ -51,6 +51,7 @@ export interface AxiosError extends Error {
 }
 
 // todo  首先定义一个Axios 类型接口,他描述了Axios类中的公共方法,接着定义了AxiosInstance接口,继承了Axios,他就是一个混合类型的接口
+// 一个接口,既可以定义一个函数,也可以像对象一样定义属性和方法,就称为混合接口
 export interface Axios {
   defaults: AxiosRequestConfig
   interceptors: {

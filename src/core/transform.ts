@@ -12,7 +12,7 @@ export default function transform(
     fns = [fns]
   }
   fns.forEach(fn => {
-    data = fn(headers, data)
+    data = fn(data, headers)
   })
   return data
 }
